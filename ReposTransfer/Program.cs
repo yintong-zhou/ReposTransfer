@@ -22,10 +22,10 @@ namespace ReposTransfer
             NetworkCredential netCredential;
             NetworkConnection netConn;
             string currentDir = Directory.GetCurrentDirectory();
-            WriteLine("Welcome to REPOS NO GIT v0.1" + newL);
+            WriteLine("Welcome to REPOS TRANSFER v0.1" + newL);
 
-            Write(currentDir + ">");
-            netDir = @"init \\192.168.1.242\homes\yzhou";
+            Write(currentDir + ">"); // Need project path
+            netDir = @"init \\192.168.1.242\homes\yzhou"; // Server repos path
 
             if (netDir.StartsWith(_cmds.Init()))
             {
