@@ -7,31 +7,48 @@ namespace ReposTransfer
 {
     class Program
     {
-        #region Global Variables
-        static CoverStrings _cover = new CoverStrings();
+        static ReposInfo repos = new ReposInfo();
+        static CoverPwd _cover = new CoverPwd();
         static BackupManager _backup = new BackupManager();
         static CMDs _cmds = new CMDs();
         static StatusChecker _checker = new StatusChecker();
         static string newL = Environment.NewLine;
-        static string netDir, source, dest, cmd;
+        static string netDir, source, dest, cmd, input;
         static string user, pwd;
-        #endregion
+
         static void Main(string[] args)
         {
-            #region Init Connection
+            
             NetworkCredential netCredential;
             NetworkConnection netConn;
-            string currentDir = Directory.GetCurrentDirectory();
             WriteLine("Welcome to REPOS TRANSFER v0.1" + newL);
+            Write("Source Directory: ");
+            string sourceDir = ReadLine();
 
-            Write(currentDir + ">"); // Need project path
-            netDir = @"init \\192.168.1.242\homes\yzhou"; // Server repos path
-
-            if (netDir.StartsWith(_cmds.Init()))
+            bool reposEx = repos.InfoFileFinder(sourceDir);
+            if (reposEx)
             {
+                repos.ReadInfoFile(sourceDir);
+            }
+
+            Write(newL + sourceDir + ">");
+            input = ReadLine(); // Server repos path
+
+            #region Init Connection
+            if (input.StartsWith(_cmds.Init()))
+            {
+                netDir = input;
+
+                if (!reposEx)
+                {
+                    var remote = netDir.Split(' ');
+                    repos.CreateInfoFile(sourceDir, remote[1]);
+                }
+                else WriteLine("Reinitialized remote {0}", netDir);
+
                 string[] initConn = netDir.Split(' ');
                 netDir = initConn[1];
-
+                repos.CreateInfoFile(sourceDir, "");
                 Write(newL + "Username: ");
                 user = ReadLine();
                 Write("Password: ");
@@ -45,16 +62,18 @@ namespace ReposTransfer
                 }
                 catch (Exception ex)
                 {
-                    WriteLine("ERROR: Connection failure.");
+                    WriteLine(">>ERROR: Connection failure.");
                     WriteLine(ex.StackTrace);
                 }
             }
             #endregion
 
-            Write(newL + Directory.GetCurrentDirectory() + ">");
-            source = ReadLine();
+            Write(newL + sourceDir + ">");
+            input = ReadLine();
             if (source.StartsWith(_cmds.AddOne()))
             {
+                source = input;
+
                 string[] initAdd;
                 if (source.Contains(_cmds.AddAll()))
                 {
@@ -80,7 +99,7 @@ namespace ReposTransfer
                     }
                     else
                     {
-                        WriteLine("    ERROR: try command 'add all'");
+                        WriteLine(">>ERROR: try command 'add all'");
                         goto CMDall;
                     }
                 }
@@ -107,7 +126,7 @@ namespace ReposTransfer
                     }
                     else
                     {
-                        WriteLine("    ERROR: try command 'add file name.extension'");
+                        WriteLine(">>ERROR: try command 'add file name.extension'");
                         goto CMDone;
                     }
                 }
