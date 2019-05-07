@@ -43,9 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\AES.cs" />
+    <Compile Include="src\ReposInfo.cs" />
     <Compile Include="src\BackupManager.cs" />
     <Compile Include="src\CMDs.cs" />
-    <Compile Include="src\CoverStrings.cs" />
+    <Compile Include="src\CoverPwd.cs" />
     <Compile Include="src\NetworkConnection.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
