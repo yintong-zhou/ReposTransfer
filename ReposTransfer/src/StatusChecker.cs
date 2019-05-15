@@ -10,7 +10,7 @@ namespace ReposTransfer
         CMDs _cmd = new CMDs();
         public void Status(string Cmd, string Source)
         {
-            if(Cmd == _cmd.Status())
+            if(Cmd.EndsWith("dir"))
             {
                 // check all ready files/directories 'add all'
                 DirectoryInfo dir = new DirectoryInfo(Source);

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
+using static System.Console;
 
 namespace ReposTransfer
 {
@@ -11,27 +8,55 @@ namespace ReposTransfer
     public class ReposInfo
     {
         Cryptography aes = new Cryptography();
-
         public void CreateInfoFile(string sourceDir, string contents)
         {
-            string aesContents = aes.EncryptText(contents);
-            string filePath = sourceDir + @"\.reposinfo.txt";
-            File.AppendAllText(filePath, aesContents);
+            try
+            {
+                string aesContents = aes.EncryptText(contents);
+                string filePath = sourceDir + @"\.reposinfo.txt";
+                File.WriteAllText(filePath, aesContents);
+            }
+            catch(Exception ex)
+            {
+                WriteLine(ex.Message.ToString());
+            }
         }
-
+        
         public string ReadInfoFile(string sourceDir)
         {
-            string filePath = sourceDir + @"\.reposinfo.txt";
-            var aesContents = File.ReadAllLines(filePath);
-            string Contents = aes.DecryptText(aesContents[0].ToString());
+            string Contents = "";
+            string filePath;
+            try
+            {
+                if(sourceDir.EndsWith("\\"))
+                    filePath = sourceDir + @".reposinfo.txt";
+                else filePath = sourceDir + @"\.reposinfo.txt";
+
+                var aesContents = File.ReadAllLines(filePath);
+                Contents = aes.DecryptText(aesContents[0].ToString());
+            }
+            catch(Exception ex)
+            {
+                WriteLine(ex.Message.ToString());
+            }
 
             return Contents;
         }
 
         public bool InfoFileFinder(string sourceDir)
         {
-            string filePath = sourceDir + @"/.reposinfo.txt";
-            bool exist = File.Exists(filePath);
+            bool exist = true;
+
+            try
+            {
+                string filePath = sourceDir + @"\.reposinfo.txt";
+                exist = File.Exists(filePath);
+            }
+            catch(Exception ex)
+            {
+                WriteLine(ex.Message.ToString());
+            }
+            
             return exist; 
         }
     }

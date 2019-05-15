@@ -12,15 +12,15 @@ namespace ReposTransfer
         static BackupManager _backup = new BackupManager();
         static CMDs _cmds = new CMDs();
         static StatusChecker _checker = new StatusChecker();
+        static NetworkCredential netCredential;
+        static NetworkConnection netConn;
+
         static string newL = Environment.NewLine;
         static string netDir, source, dest, cmd, input;
         static string user, pwd;
 
         static void Main(string[] args)
         {
-            
-            NetworkCredential netCredential;
-            NetworkConnection netConn;
             WriteLine("Welcome to REPOS TRANSFER v0.1" + newL);
             Write("Source Directory: ");
             string sourceDir = ReadLine();
@@ -31,53 +31,57 @@ namespace ReposTransfer
                 repos.ReadInfoFile(sourceDir);
             }
 
+            InputCMD:
             Write(newL + sourceDir + ">");
             input = ReadLine(); // Server repos path
 
             #region Init Connection
             if (input.StartsWith(_cmds.Init()))
             {
-                netDir = input;
-
-                if (!reposEx)
-                {
-                    var remote = netDir.Split(' ');
-                    repos.CreateInfoFile(sourceDir, remote[1]);
-                }
-                else WriteLine("Reinitialized remote {0}", netDir);
-
-                string[] initConn = netDir.Split(' ');
-                netDir = initConn[1];
-                repos.CreateInfoFile(sourceDir, "");
                 Write(newL + "Username: ");
                 user = ReadLine();
                 Write("Password: ");
                 pwd = _cover.ReadPassword();
 
+                var remote = input.Split(' ');
+                var netAuth = remote[1] + ";" + user + ";" + pwd;
+
+                if (!reposEx)
+                {
+                    repos.CreateInfoFile(sourceDir, netAuth);
+                }
+                else
+                {
+                    repos.CreateInfoFile(sourceDir, netAuth);
+                    WriteLine("Reinitialized remote {0}", remote[1]);
+                }
+
                 netCredential = new NetworkCredential(user, pwd);
                 try
                 {
-                    netConn = new NetworkConnection(netDir, netCredential);
-                    WriteLine(newL + "Connect to " + netDir);
+                    netConn = new NetworkConnection(remote[1], netCredential);
+                    WriteLine(newL + "Connect to " + remote[1]);
+                    goto InputCMD;
                 }
                 catch (Exception ex)
                 {
                     WriteLine(">>ERROR: Connection failure.");
-                    WriteLine(ex.StackTrace);
+                    WriteLine(ex.Message.ToString());
                 }
             }
             #endregion
 
-            Write(newL + sourceDir + ">");
-            input = ReadLine();
-            if (source.StartsWith(_cmds.AddOne()))
+            if (input.StartsWith(_cmds.AddOne()))
             {
                 source = input;
+                var netStr = repos.ReadInfoFile(sourceDir);
+                var netSplit = netStr.Split(';');
+                netDir = netSplit[0].ToString();
 
                 string[] initAdd;
                 if (source.Contains(_cmds.AddAll()))
                 {
-                    source = Directory.GetCurrentDirectory();
+                    source = sourceDir;
                     string[] dirName = source.Split('\\');
                     int i = dirName.Length;
                     i--;
@@ -85,7 +89,7 @@ namespace ReposTransfer
 
                 CMDall:
                     ResetColor();
-                    Write(newL + Directory.GetCurrentDirectory() + ">");
+                    Write(newL + sourceDir + ">");
                     cmd = ReadLine();
                     if (cmd.StartsWith(_cmds.Push()))
                     {
@@ -106,14 +110,18 @@ namespace ReposTransfer
                 else
                 {
                     initAdd = source.Split(' ');
-                    source = initAdd[1];
-                    source = Directory.GetCurrentDirectory() + "\\" + source;
+                    source = sourceDir + "\\" + initAdd[1];
+
+                    string[] dirName = source.Split('\\');
+                    int i = dirName.Length;
+                    i--;
+
                     string fileName = Path.GetFileName(source);
-                    dest = Path.Combine(netDir + "\\", fileName);
+                    dest = Path.Combine(netDir + "\\", dirName[1] + "\\" + fileName);
 
                 CMDone:
                     ResetColor();
-                    Write(newL + Directory.GetCurrentDirectory() + ">");
+                    Write(newL + sourceDir + ">");
                     cmd = ReadLine();
                     if (cmd.StartsWith(_cmds.Push()))
                     {
@@ -132,6 +140,7 @@ namespace ReposTransfer
                 }
             }
 
+            goto InputCMD;
 
             ReadKey();
         }
