@@ -9,7 +9,7 @@ Network authentication for Backup/Transfer Files without Git commands.
 Source Directory: Directory about all source that will be transferred.
 
 ## Commands list
-- **init init //0.0.0.0/folders** *(Establish the connection to Local Server/Machine)*
+- **init //0.0.0.0/folders** *(Establish the connection to Local Server/Machine)*
 - **add filename.extension** *(Makes to ready a single file)*
 - **add all** *(Makes to ready all files and subDirectories)*
 - **status file** *(Checks the single file status before transferred)*
