@@ -24,7 +24,7 @@ namespace ReposTransfer
                     WriteLine("To " + destFile);
                     
                 }
-                catch(Exception ex)
+                catch
                 {
                     WriteLine("ERROR: Transfer failure.");
                 }
@@ -63,7 +63,7 @@ namespace ReposTransfer
                     file.CopyTo(tempPath, true);
                     FilesCount++;
                 }
-                catch(Exception ex)
+                catch
                 {
                     failCount++;
                 }
@@ -82,7 +82,7 @@ namespace ReposTransfer
                         FullDirectory(subdir.FullName, tempPath, copySubDirs);
                         FilesCount++;   
                     }
-                    catch(Exception ex)
+                    catch
                     {
                         failCount++;
                     }

@@ -71,13 +71,29 @@ namespace ReposTransfer
             }
             #endregion
 
-            if (input.StartsWith(_cmds.AddOne()))
+            if(!input.StartsWith(_cmds.Init()))
             {
-                source = input;
                 var netStr = repos.ReadInfoFile(sourceDir);
                 var netSplit = netStr.Split(';');
                 netDir = netSplit[0].ToString();
+                var user = netSplit[1].ToString();
+                var pwd = netSplit[2].ToString();
 
+                try
+                {
+                    netCredential = new NetworkCredential(user, pwd);
+                    netConn = new NetworkConnection(netDir, netCredential);
+                }
+                catch(Exception ex)
+                {
+                    WriteLine(ex.Message.ToString());
+                }
+            }
+
+            if (input.StartsWith(_cmds.AddOne()))
+            {
+                source = input;
+                
                 string[] initAdd;
                 if (source.Contains(_cmds.AddAll()))
                 {
