@@ -7,6 +7,7 @@ namespace ReposTransfer
 {
     class Program
     {
+        #region Variables
         static ReposInfo repos = new ReposInfo();
         static CoverPwd _cover = new CoverPwd();
         static BackupManager _backup = new BackupManager();
@@ -18,9 +19,11 @@ namespace ReposTransfer
         static string newL = Environment.NewLine;
         static string netDir, source, dest, cmd, input;
         static string user, pwd;
+        #endregion
 
         static void Main(string[] args)
         {
+            #region Init Terminal
             WriteLine("Welcome to REPOS TRANSFER v0.3" + newL);
             Write("Source Directory: ");
             string sourceDir = ReadLine();
@@ -49,6 +52,7 @@ namespace ReposTransfer
             { 
                 WriteLine("Write init for connect to the Server");
             }
+        #endregion
 
         InputCMD:
             Write(newL + sourceDir + ">");
@@ -82,13 +86,17 @@ namespace ReposTransfer
             }
             #endregion
 
+            
             if (input.StartsWith(_cmds.AddOne()))
             {
                 source = input;
                 
                 string[] initAdd;
+
+                
                 if (source.Contains(_cmds.AddAll()))
                 {
+                    #region Add All to Push
                     source = sourceDir;
                     string[] dirName = source.Split('\\');
                     int i = dirName.Length;
@@ -101,7 +109,7 @@ namespace ReposTransfer
                     cmd = ReadLine();
                     if (cmd.StartsWith(_cmds.Push()))
                     {
-                        _backup.FullDirectory(source, dest, true);
+                        _backup.FullDirectory(source, dest, true); // Transfer function
                         _backup.FullDirectoryStatus(dest);
                     }
                     else if (cmd.StartsWith(_cmds.Status()))
@@ -115,8 +123,10 @@ namespace ReposTransfer
                         goto CMDall;
                     }
                 }
+                #endregion
                 else
                 {
+                    #region Add One to Push
                     initAdd = source.Split(' ');
                     source = sourceDir + "\\" + initAdd[1];
 
@@ -145,12 +155,10 @@ namespace ReposTransfer
                         WriteLine(">>ERROR: try command 'add file name.extension'");
                         goto CMDone;
                     }
+                    #endregion
                 }
             }
-
             goto InputCMD;
-
-            //ReadKey();
         }
     }
 }
