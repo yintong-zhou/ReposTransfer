@@ -21,7 +21,7 @@ namespace ReposTransfer
 
         static void Main(string[] args)
         {
-            WriteLine("Welcome to REPOS TRANSFER v0.2" + newL);
+            WriteLine("Welcome to REPOS TRANSFER v0.3" + newL);
             Write("Source Directory: ");
             string sourceDir = ReadLine();
 
@@ -81,26 +81,6 @@ namespace ReposTransfer
                 }
             }
             #endregion
-
-            //if (input.StartsWith(_cmds.Connect()))
-            //{
-            //    var netStr = repos.ReadInfoFile(sourceDir);
-            //    var netSplit = netStr.Split(';');
-            //    netDir = netSplit[0].ToString();
-            //    var user = netSplit[1].ToString();
-            //    var pwd = netSplit[2].ToString();
-
-            //    try
-            //    {
-            //        netCredential = new NetworkCredential(user, pwd);
-            //        netConn = new NetworkConnection(netDir, netCredential);
-            //        WriteLine("Connected to " + netDir);
-            //    }
-            //    catch(Exception ex)
-            //    {
-            //        WriteLine(ex.Message.ToString());
-            //    }
-            //}
 
             if (input.StartsWith(_cmds.AddOne()))
             {
