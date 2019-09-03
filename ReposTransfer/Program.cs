@@ -43,8 +43,8 @@ namespace ReposTransfer
                 Write("Password: ");
                 pwd = _cover.ReadPassword();
 
-                var remote = input.Split(' ');
-                var netAuth = remote[1] + ";" + user + ";" + pwd;
+                var remote = input.Split(' '); 
+                var netAuth = remote[0] + ";" + user + ";" + pwd;
 
                 if (!reposEx)
                 {
@@ -71,7 +71,7 @@ namespace ReposTransfer
             }
             #endregion
 
-            if(!input.StartsWith(_cmds.Init()))
+            if(input.StartsWith(_cmds.Connect()))
             {
                 var netStr = repos.ReadInfoFile(sourceDir);
                 var netSplit = netStr.Split(';');
@@ -83,6 +83,7 @@ namespace ReposTransfer
                 {
                     netCredential = new NetworkCredential(user, pwd);
                     netConn = new NetworkConnection(netDir, netCredential);
+                    WriteLine("Connected to " + netDir);
                 }
                 catch(Exception ex)
                 {
@@ -158,7 +159,7 @@ namespace ReposTransfer
 
             goto InputCMD;
 
-            ReadKey();
+            //ReadKey();
         }
     }
 }

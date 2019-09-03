@@ -9,8 +9,8 @@ namespace ReposTransfer
         public string AddOne {get; set;}
         public string AddAll {get; set;}
         public string Push {get; set;}
-        public string Status {get; set;}
-        
+        public string Status  {get; set;}
+        public string Connect {get; set;}
     }
     
     public class CMDs
@@ -46,5 +46,12 @@ namespace ReposTransfer
             var status = cmd.Status;
             return status;
         }
+
+        public string Connect()
+        {
+            cmd.Connect = "connect";
+            var connect = cmd.Connect;
+            return connect;
+        } 
     }
 }
