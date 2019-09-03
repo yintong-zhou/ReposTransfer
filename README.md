@@ -7,6 +7,7 @@ Network authentication for Backup/Transfer Files without Git commands.
 [![Build Status](https://dev.azure.com/zhouyintong/ReposTransfer%20GitHub/_apis/build/status/yintong-zhou.ReposTransfer?branchName=master)](https://dev.azure.com/zhouyintong/ReposTransfer%20GitHub/_build/latest?definitionId=6&branchName=master)
 
 Source Directory: Directory about all source that will be transferred.
+If the '.infoFile.txt' exists the system automatically will connect to the Server else enter the init command by the list.
 
 ## Commands list
 - **init //0.0.0.0/folders** *(Establish the connection to Local Server/Machine)*

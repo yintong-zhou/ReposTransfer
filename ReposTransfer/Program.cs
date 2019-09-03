@@ -21,57 +21,12 @@ namespace ReposTransfer
 
         static void Main(string[] args)
         {
-            WriteLine("Welcome to REPOS TRANSFER v0.1" + newL);
+            WriteLine("Welcome to REPOS TRANSFER v0.2" + newL);
             Write("Source Directory: ");
             string sourceDir = ReadLine();
 
             bool reposEx = repos.InfoFileFinder(sourceDir);
             if (reposEx)
-            {
-                repos.ReadInfoFile(sourceDir);
-            }
-
-            InputCMD:
-            Write(newL + sourceDir + ">");
-            input = ReadLine(); // Server repos path
-
-            #region Init Connection
-            if (input.StartsWith(_cmds.Init()))
-            {
-                Write(newL + "Username: ");
-                user = ReadLine();
-                Write("Password: ");
-                pwd = _cover.ReadPassword();
-
-                var remote = input.Split(' '); 
-                var netAuth = remote[0] + ";" + user + ";" + pwd;
-
-                if (!reposEx)
-                {
-                    repos.CreateInfoFile(sourceDir, netAuth);
-                }
-                else
-                {
-                    repos.CreateInfoFile(sourceDir, netAuth);
-                    WriteLine("Reinitialized remote {0}", remote[1]);
-                }
-
-                netCredential = new NetworkCredential(user, pwd);
-                try
-                {
-                    netConn = new NetworkConnection(remote[1], netCredential);
-                    WriteLine(newL + "Connect to " + remote[1]);
-                    goto InputCMD;
-                }
-                catch (Exception ex)
-                {
-                    WriteLine(">>ERROR: Connection failure.");
-                    WriteLine(ex.Message.ToString());
-                }
-            }
-            #endregion
-
-            if(input.StartsWith(_cmds.Connect()))
             {
                 var netStr = repos.ReadInfoFile(sourceDir);
                 var netSplit = netStr.Split(';');
@@ -85,11 +40,67 @@ namespace ReposTransfer
                     netConn = new NetworkConnection(netDir, netCredential);
                     WriteLine("Connected to " + netDir);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     WriteLine(ex.Message.ToString());
                 }
             }
+            else
+            { 
+                WriteLine("Write init for connect to the Server");
+            }
+
+        InputCMD:
+            Write(newL + sourceDir + ">");
+            input = ReadLine(); // init \\0.0.0.0\dir\subdir
+
+            #region Init Connection
+            if (input.StartsWith(_cmds.Init()))
+            {
+                Write(newL + "Username: ");
+                user = ReadLine();
+                Write("Password: ");
+                pwd = _cover.ReadPassword();
+
+                var remote = input.Split(' ');
+                var netAuth = remote[1] + ";" + user + ";" + pwd;
+
+                repos.CreateInfoFile(sourceDir, netAuth);
+                WriteLine("Initialized remote {0}", remote[1]);
+
+                netCredential = new NetworkCredential(user, pwd);
+                try
+                {
+                    netConn = new NetworkConnection(remote[1], netCredential);
+                    WriteLine(newL + "Connect to " + remote[1]);
+                }
+                catch (Exception ex)
+                {
+                    WriteLine(">>ERROR: Connection failure.");
+                    WriteLine(ex.Message.ToString());
+                }
+            }
+            #endregion
+
+            //if (input.StartsWith(_cmds.Connect()))
+            //{
+            //    var netStr = repos.ReadInfoFile(sourceDir);
+            //    var netSplit = netStr.Split(';');
+            //    netDir = netSplit[0].ToString();
+            //    var user = netSplit[1].ToString();
+            //    var pwd = netSplit[2].ToString();
+
+            //    try
+            //    {
+            //        netCredential = new NetworkCredential(user, pwd);
+            //        netConn = new NetworkConnection(netDir, netCredential);
+            //        WriteLine("Connected to " + netDir);
+            //    }
+            //    catch(Exception ex)
+            //    {
+            //        WriteLine(ex.Message.ToString());
+            //    }
+            //}
 
             if (input.StartsWith(_cmds.AddOne()))
             {
