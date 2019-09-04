@@ -51,7 +51,7 @@ namespace ReposTransfer
             }
             else
             { 
-                WriteLine("Write init \\\\0.0.0.0\\dir\\subdir for connect to the Server");
+                WriteLine("Write " + "init \\\\0.0.0.0\\dir\\subdir".ToUpper() + " for connect to the Server");
             }
         #endregion
 
@@ -192,9 +192,7 @@ namespace ReposTransfer
 
                     if (localKey != remoteKey)
                     {
-                        ForegroundColor = ConsoleColor.Red;
                         WriteLine(">>ERROR: ID Key is corrupted.");
-                        ResetColor();
                     }
                     else
                     {
