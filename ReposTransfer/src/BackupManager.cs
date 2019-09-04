@@ -91,16 +91,23 @@ namespace ReposTransfer
         }
         public void FullDirectoryStatus(string destDir)
         {
-            int diff = FilesCount - failCount;
-            WriteLine("Counting objects " + "(" + diff + "/" + FilesCount + ")" + ", done.");
+            try
+            {
+                int diff = FilesCount - failCount;
+                WriteLine("Counting objects " + "(" + diff + "/" + FilesCount + ")" + ", done.");
 
-            if(failCount < 1)
-                rate = 100;
-            else rate = (failCount / FilesCount) * 100;
+                if (failCount < 1)
+                    rate = 100;
+                else rate = (failCount / FilesCount) * 100;
 
-            WriteLine("Transfer objects " + rate + "%"+ ", done.");
-            WriteLine("remote: Transfer complete.");
-            WriteLine("To " + destDir);
+                WriteLine("Transfer objects " + rate + "%" + ", done.");
+                WriteLine("remote: Transfer complete.");
+                WriteLine("To " + destDir);
+            }
+            catch(Exception ex)
+            {
+                WriteLine(ex.Message.ToString());
+            }
         }
     }
 }
