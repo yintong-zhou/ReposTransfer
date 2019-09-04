@@ -1,6 +1,6 @@
 # ReposTransfer
 
-NOTE: This is an Alpha version and it's unstable
+NOTE: This is an Beta version and it's probably unstable.
 <br>
 Network authentication for Backup/Transfer Files without Git commands.
 
@@ -8,7 +8,7 @@ Network authentication for Backup/Transfer Files without Git commands.
 
 Source Directory: Directory about all source that will be transferred.
 <br>
-If the '.infoFile.txt' exists the system automatically will connect to the Server else enter the init command by the list.
+If the '.reposinfo.txt' exists the system automatically will connect to the Server else enter the init command by the list.
 
 ## Commands list
 - **init //0.0.0.0/folders** *(Establish the connection to Local Server/Machine)*
