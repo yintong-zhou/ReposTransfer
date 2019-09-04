@@ -57,7 +57,7 @@ namespace ReposTransfer
 
         InputCMD:
             Write(newL + sourceDir + ">");
-            input = ReadLine(); // init \\0.0.0.0\dir\subdir
+            input = ReadLine(); 
 
             #region Init Connection
             if (input.StartsWith(_cmds.Init()))
@@ -92,9 +92,7 @@ namespace ReposTransfer
             if (input.StartsWith(_cmds.AddOne()))
             {
                 source = input;
-                
                 string[] initAdd;
-
                 
                 if (source.Contains(_cmds.AddAll()))
                 {
@@ -109,20 +107,28 @@ namespace ReposTransfer
                     ResetColor();
                     Write(newL + sourceDir + ">");
                     cmd = ReadLine();
-                    if (cmd.StartsWith(_cmds.Push()))
+
+                    try
                     {
-                        _backup.FullDirectory(source, dest, true); // Transfer function
-                        _backup.FullDirectoryStatus(dest);
+                        if (cmd.StartsWith(_cmds.Push()))
+                        {
+                            _backup.FullDirectory(source, dest, true); 
+                            _backup.FullDirectoryStatus(dest);
+                        }
+                        else if (cmd.StartsWith(_cmds.Status()))
+                        {
+                            _checker.Status(cmd, source);
+                            goto CMDall;
+                        }
+                        else
+                        {
+                            WriteLine(">>ERROR: try command 'add all'");
+                            goto CMDall;
+                        }
                     }
-                    else if (cmd.StartsWith(_cmds.Status()))
+                    catch (Exception ex)
                     {
-                        _checker.Status(cmd, source);
-                        goto CMDall;
-                    }
-                    else
-                    {
-                        WriteLine(">>ERROR: try command 'add all'");
-                        goto CMDall;
+                        WriteLine(ex.Message.ToString());
                     }
                     #endregion
                 }
@@ -143,19 +149,27 @@ namespace ReposTransfer
                     ResetColor();
                     Write(newL + sourceDir + ">");
                     cmd = ReadLine();
-                    if (cmd.StartsWith(_cmds.Push()))
+
+                    try
                     {
-                        _backup.OneFile(source, dest);
+                        if (cmd.StartsWith(_cmds.Push()))
+                        {
+                            _backup.OneFile(source, dest);
+                        }
+                        else if (cmd.StartsWith(_cmds.Status()))
+                        {
+                            _checker.Status(cmd, source);
+                            goto CMDone;
+                        }
+                        else
+                        {
+                            WriteLine(">>ERROR: try command 'add file name.extension'");
+                            goto CMDone;
+                        }
                     }
-                    else if (cmd.StartsWith(_cmds.Status()))
+                    catch(Exception ex)
                     {
-                        _checker.Status(cmd, source);
-                        goto CMDone;
-                    }
-                    else
-                    {
-                        WriteLine(">>ERROR: try command 'add file name.extension'");
-                        goto CMDone;
+                        WriteLine(ex.Message.ToString());
                     }
                     #endregion
                 }
@@ -163,29 +177,34 @@ namespace ReposTransfer
 
             if (input.StartsWith(_cmds.Pull()))
             {
-                //read local .reposkey 
-                string localRepos = repos.ReadInfoFile(sourceDir);
-                var localInfo = localRepos.Split(';');
-                var localKey = localInfo[3];
-
-                var subDir = Path.GetFileName(sourceDir);
-                var remoteDir = localInfo[0] + "\\" + subDir;
-
-                //read remote .reposkey
-                string remoteRepos = repos.ReadInfoFile(remoteDir);
-                var remoteInfo = remoteRepos.Split(';');
-                var remoteKey = remoteInfo[3];
-
-                if(localKey != remoteKey)
+                try
                 {
-                    ForegroundColor = ConsoleColor.Red;
-                    WriteLine(">>ERROR: ID Key is corrupted.");
-                    ResetColor();
+                    string localRepos = repos.ReadInfoFile(sourceDir);
+                    var localInfo = localRepos.Split(';');
+                    var localKey = localInfo[3];
+
+                    var subDir = Path.GetFileName(sourceDir);
+                    var remoteDir = localInfo[0] + "\\" + subDir;
+
+                    string remoteRepos = repos.ReadInfoFile(remoteDir);
+                    var remoteInfo = remoteRepos.Split(';');
+                    var remoteKey = remoteInfo[3];
+
+                    if (localKey != remoteKey)
+                    {
+                        ForegroundColor = ConsoleColor.Red;
+                        WriteLine(">>ERROR: ID Key is corrupted.");
+                        ResetColor();
+                    }
+                    else
+                    {
+                        _backup.FullDirectory(remoteDir, sourceDir, true); 
+                        _backup.FullDirectoryStatus(sourceDir);
+                    }
                 }
-                else
+                catch(Exception ex)
                 {
-                    _backup.FullDirectory(remoteDir, sourceDir, true); // Transfer function
-                    _backup.FullDirectoryStatus(sourceDir);
+                    WriteLine(ex.Message.ToString());
                 }
             }
 
