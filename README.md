@@ -16,4 +16,5 @@ If the '.infoFile.txt' exists the system automatically will connect to the Serve
 - **add all** *(Makes to ready all files and subDirectories)*
 - **status file** *(Checks the single file status before transferred)*
 - **status dir** *(Checks all files and subDirectories status before transferred)*
-- **push** *(Transfers selected files/directories)*
+- **push** *(Backup selected files/directories to the Server)*
+- **pull** *(Restore selected files/directories by the Server)*

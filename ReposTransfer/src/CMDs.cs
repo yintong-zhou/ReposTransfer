@@ -5,11 +5,12 @@ namespace ReposTransfer
 {
     public class Commands
     {
-        public string Init {get; set;}
-        public string AddOne {get; set;}
-        public string AddAll {get; set;}
-        public string Push {get; set;}
-        public string Status  {get; set;}
+        public string Init { get; set; }
+        public string AddOne { get; set; }
+        public string AddAll { get; set; }
+        public string Push { get; set; }
+        public string Status { get; set; }
+        public string Pull { get; set; }
     }
     
     public class CMDs
@@ -44,6 +45,12 @@ namespace ReposTransfer
             cmd.Status = "status";
             var status = cmd.Status;
             return status;
+        }
+        public string Pull()
+        {
+            cmd.Pull = "pull";
+            var pull = cmd.Pull;
+            return pull;
         }
     }
 }

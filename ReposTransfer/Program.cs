@@ -9,6 +9,7 @@ namespace ReposTransfer
     {
         #region Variables
         static ReposInfo repos = new ReposInfo();
+        static KeysGenerator generator = new KeysGenerator();
         static CoverPwd _cover = new CoverPwd();
         static BackupManager _backup = new BackupManager();
         static CMDs _cmds = new CMDs();
@@ -26,8 +27,8 @@ namespace ReposTransfer
             #region Init Terminal
             WriteLine("Welcome to REPOS TRANSFER v0.3" + newL);
             Write("Source Directory: ");
-            string sourceDir = ReadLine();
 
+            string sourceDir = ReadLine();
             bool reposEx = repos.InfoFileFinder(sourceDir);
             if (reposEx)
             {
@@ -50,7 +51,7 @@ namespace ReposTransfer
             }
             else
             { 
-                WriteLine("Write init for connect to the Server");
+                WriteLine("Write init \\\\0.0.0.0\\dir\\subdir for connect to the Server");
             }
         #endregion
 
@@ -66,8 +67,9 @@ namespace ReposTransfer
                 Write("Password: ");
                 pwd = _cover.ReadPassword();
 
+                var code = generator.HashCode(64);
                 var remote = input.Split(' ');
-                var netAuth = remote[1] + ";" + user + ";" + pwd;
+                var netAuth = remote[1] + ";" + user + ";" + pwd + ";" + code;
 
                 repos.CreateInfoFile(sourceDir, netAuth);
                 WriteLine("Initialized remote {0}", remote[1]);
@@ -122,8 +124,8 @@ namespace ReposTransfer
                         WriteLine(">>ERROR: try command 'add all'");
                         goto CMDall;
                     }
+                    #endregion
                 }
-                #endregion
                 else
                 {
                     #region Add One to Push
@@ -158,6 +160,35 @@ namespace ReposTransfer
                     #endregion
                 }
             }
+
+            if (input.StartsWith(_cmds.Pull()))
+            {
+                //read local .reposkey 
+                string localRepos = repos.ReadInfoFile(sourceDir);
+                var localInfo = localRepos.Split(';');
+                var localKey = localInfo[3];
+
+                var subDir = Path.GetFileName(sourceDir);
+                var remoteDir = localInfo[0] + "\\" + subDir;
+
+                //read remote .reposkey
+                string remoteRepos = repos.ReadInfoFile(remoteDir);
+                var remoteInfo = remoteRepos.Split(';');
+                var remoteKey = remoteInfo[3];
+
+                if(localKey != remoteKey)
+                {
+                    ForegroundColor = ConsoleColor.Red;
+                    WriteLine(">>ERROR: ID Key is corrupted.");
+                    ResetColor();
+                }
+                else
+                {
+                    _backup.FullDirectory(remoteDir, sourceDir, true); // Transfer function
+                    _backup.FullDirectoryStatus(sourceDir);
+                }
+            }
+
             goto InputCMD;
         }
     }
