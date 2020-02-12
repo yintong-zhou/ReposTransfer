@@ -26,7 +26,7 @@ namespace ReposTransfer
         {
             #region Init Terminal
             Title = "REPOS TRANSFER";
-            WriteLine("Welcome to REPOS TRANSFER v0.9.0" + newL);
+            WriteLine("Welcome to REPOS TRANSFER v0.9.1" + newL);
             Write("Source Directory: ");
 
             string sourceDir = ReadLine();
