@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="src\AES.cs" />
     <Compile Include="src\KeysGenerator.cs" />
+    <Compile Include="src\ProgressBar.cs" />
     <Compile Include="src\ReposInfo.cs" />
     <Compile Include="src\BackupManager.cs" />
     <Compile Include="src\CMDs.cs" />

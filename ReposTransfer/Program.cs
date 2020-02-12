@@ -25,6 +25,7 @@ namespace ReposTransfer
         static void Main(string[] args)
         {
             #region Init Terminal
+            Title = "REPOS TRANSFER";
             WriteLine("Welcome to REPOS TRANSFER v0.9.0" + newL);
             Write("Source Directory: ");
 
@@ -163,7 +164,7 @@ namespace ReposTransfer
                         }
                         else
                         {
-                            WriteLine(">>ERROR: try command 'add file name.extension'");
+                            WriteLine(">>ERROR: try command 'add filename.extension'");
                             goto CMDone;
                         }
                     }
