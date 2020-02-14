@@ -6,27 +6,32 @@ namespace ReposTransfer
 {
     public class BackupManager
     {
+        ProgressBar bar = new ProgressBar();
         int FilesCount;
         int failCount;
         decimal rate;
 
         public void OneFile(string sourceFile, string destFile)
         {
-            if(File.Exists(sourceFile))
+            string destDir = Path.GetDirectoryName(destFile);
+
+            if (!Directory.Exists(destDir)) Directory.CreateDirectory(destDir);
+
+            if (File.Exists(sourceFile))
             {
                 // transfer single file and overwrite it
                 try
                 {
                     File.Copy(sourceFile, destFile, true);
-                    WriteLine("Counting objects (1/1), done.");
                     WriteLine("Transfer objects 100%, done.");
+                    WriteLine("Counting objects (1/1), done.");
                     WriteLine("remote: Transfer complete.");
                     WriteLine("To " + destFile);
-                    
                 }
-                catch
+                catch(Exception ex)
                 {
                     WriteLine("ERROR: Transfer failure.");
+                    WriteLine(ex.Message);
                 }
             }
             else WriteLine(" Source file does not exist or could not be found: "+ sourceFile);
@@ -61,6 +66,7 @@ namespace ReposTransfer
                 try
                 {
                     file.CopyTo(tempPath, true);
+                    bar.ShowPercentProgress("Transfer objects ", FilesCount, files.Length);
                     FilesCount++;
                 }
                 catch
@@ -94,13 +100,12 @@ namespace ReposTransfer
             try
             {
                 int diff = FilesCount - failCount;
-                WriteLine("Counting objects " + "(" + diff + "/" + FilesCount + ")" + ", done.");
+                WriteLine(Environment.NewLine + "Counting objects " + "(" + diff + "/" + FilesCount + ")" + ", done.");
 
                 if (failCount < 1)
                     rate = 100;
                 else rate = (failCount / FilesCount) * 100;
-
-                WriteLine("Transfer objects " + rate + "%" + ", done.");
+                
                 WriteLine("remote: Transfer complete.");
                 WriteLine("To " + destDir);
             }
