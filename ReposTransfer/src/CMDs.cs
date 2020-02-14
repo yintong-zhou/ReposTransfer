@@ -13,5 +13,26 @@ namespace ReposTransfer
         public string Status() => "status"; // show local project status
         public string Pull() => "pull"; // restore local project from another host
         public string Help() => "help"; // show comands
+
+        public string HelpInfo() // show all comand
+        {
+            string comands = string.Empty;
+            string nl = Environment.NewLine;
+
+            comands = $"usage: rtn [--version] [--help] <commands>{nl}" +
+                $"These are common ReposTranfer used in various situantions:{nl}" +
+                $"{nl}" +
+                $"  {Start()}        {""}{nl}" +
+                $"  {Init()}         {""}{nl}" +
+                $"  {AddOne()}       {""}{nl}" +
+                $"  {AddAll()}       {""}{nl}" +
+                $"  {Push()}         {""}{nl}" +
+                $"  {Status()}       {""}{nl}" +
+                $"  {Pull()}         {""}{nl}" +
+                $"{nl}" +
+                $"'rtn help' list available commands." ;
+
+            return comands;
+        }
     }
 }

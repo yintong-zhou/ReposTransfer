@@ -60,12 +60,12 @@ namespace ReposTransfer
             Write(newL + sourceDir + ">");
             input = ReadLine();
 
-            var comand = input.Split(' ');
+            var command = input.Split(' ');
             
             if (input.StartsWith(_cmds.Start()))
             {
                 #region Init Connection
-                if (comand[1] == _cmds.Init())
+                if (command[1] == _cmds.Init())
                 {
                     Write(newL + "Username: ");
                     user = ReadLine();
@@ -75,7 +75,7 @@ namespace ReposTransfer
                     var token = generator.HashCode(64);
                     var remote = input.Split(' '); // input: init \\\\192.168.1.242\\swlab aggiungendo la parte rtn, il netPath diventa remote[2]
 
-                    if (comand.Length > 2)
+                    if (command.Length > 2)
                     {
                         var netAuth = remote[2] + ";" + user + ";" + pwd + ";" + token;
                         repos.CreateInfoFile(sourceDir, netAuth);
@@ -102,10 +102,10 @@ namespace ReposTransfer
                 #endregion
 
                 #region ADD ONE
-                if (comand[1] ==_cmds.AddOne())
+                if (command[1] ==_cmds.AddOne())
                 {
                     #region Add One to Push
-                    if (comand.Length > 2) source = sourceDir + "\\" + comand[2];
+                    if (command.Length > 2) source = sourceDir + "\\" + command[2];
                     else WriteLine(">>INFO: Please insert the filename.extension");
                    
                     string[] dirName = source.Split('\\');
@@ -119,21 +119,21 @@ namespace ReposTransfer
                     ResetColor();
                     Write(newL + sourceDir + ">");
                     input = ReadLine();
-                    comand = input.Split(' ');
+                    command = input.Split(' ');
 
                     try
                     {
-                        if (comand[0] == _cmds.Start())
+                        if (command[0] == _cmds.Start())
                         {
-                            if(comand.Length > 1)
+                            if(command.Length > 1)
                             {
-                                if (comand[1] == _cmds.Push())
+                                if (command[1] == _cmds.Push())
                                 {
                                     _backup.OneFile(source, dest);
                                 }
-                                else if (comand[1] == _cmds.Status())
+                                else if (command[1] == _cmds.Status())
                                 {
-                                    _checker.Status(comand[1], source);
+                                    _checker.Status(command[1], source);
                                     goto CMDone;
                                 }
                                 else
@@ -154,7 +154,7 @@ namespace ReposTransfer
                 #endregion
 
                 #region ADD ALL
-                if (comand[1] == _cmds.AddAll())
+                if (command[1] == _cmds.AddAll())
                 {
                     #region Add All to Push
                     source = sourceDir;
@@ -167,22 +167,22 @@ namespace ReposTransfer
                     ResetColor();
                     Write(newL + sourceDir + ">");
                     input = ReadLine();
-                    comand = input.Split(' ');
+                    command = input.Split(' ');
 
                     try
                     {
-                        if (comand[0] == _cmds.Start())
+                        if (command[0] == _cmds.Start())
                         {
-                            if (comand.Length > 1)
+                            if (command.Length > 1)
                             {
-                                if (comand[1] == _cmds.Push())
+                                if (command[1] == _cmds.Push())
                                 {
                                     _backup.FullDirectory(source, dest, true);
                                     _backup.FullDirectoryStatus(dest);
                                 }
-                                else if (comand[1] == _cmds.Status())
+                                else if (command[1] == _cmds.Status())
                                 {
-                                    _checker.Status(comand[1], source);
+                                    _checker.Status(command[1], source);
                                     goto CMDall;
                                 }
                                 else
@@ -232,6 +232,13 @@ namespace ReposTransfer
                     {
                         WriteLine(ex.Message.ToString());
                     }
+                }
+                #endregion
+
+                #region HELP
+                if (command[1] == _cmds.Help())
+                {
+                    WriteLine(_cmds.HelpInfo());
                 }
                 #endregion
             }
