@@ -363,9 +363,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:ReposTransfer"
+        "ProductName" = "8:rtn"
         "ProductCode" = "8:{2B3DEE9C-D4BF-4322-BDC9-7DEC7DDD9348}"
-        "PackageCode" = "8:{F6071AA7-DF93-4B69-911F-AD9CF1589745}"
+        "PackageCode" = "8:{5C391D99-F9E7-4BC7-A81E-AE6B02DB7D90}"
         "UpgradeCode" = "8:{B8E8B1F1-D4E4-4E80-9D0B-858351F5C83A}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -373,10 +373,10 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:ML Sistemi"
+        "Manufacturer" = "8:"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:ReposTransfer "
+        "Title" = "8:rtn"
         "Subject" = "8:"
         "ARPCONTACT" = "8:Yintong Zhou"
         "Keywords" = "8:"
@@ -487,7 +487,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_8070FA534CE54983ABDA164E03D8BD6D"
             {
-            "Name" = "8:ReposTransfer"
+            "Name" = "8:rtn"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"

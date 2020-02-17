@@ -18,7 +18,7 @@ namespace ReposTransfer
         static NetworkConnection netConn;
 
         static string newL = Environment.NewLine;
-        static string netDir, source, dest, cmd, input;
+        static string netDir, source, dest, input;
         static string user, pwd;
         static string version = "1.0.0";
         #endregion
@@ -26,7 +26,7 @@ namespace ReposTransfer
         static void Main(string[] args)
         {
             #region Init Terminal
-            Title = "REPOS TRANSFER";
+            Title = "rtn";
             WriteLine($"Welcome to REPOS TRANSFER v{version}" + newL);
             Write("Source Directory: ");
 
