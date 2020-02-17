@@ -112,6 +112,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -356,15 +364,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ReposTransfer"
-        "ProductCode" = "8:{760A3AEE-9D13-42C1-9680-A935A7E06790}"
-        "PackageCode" = "8:{1440C7B4-4F9B-4ECB-B7AB-44107E2AC6E8}"
+        "ProductCode" = "8:{2B3DEE9C-D4BF-4322-BDC9-7DEC7DDD9348}"
+        "PackageCode" = "8:{F6071AA7-DF93-4B69-911F-AD9CF1589745}"
         "UpgradeCode" = "8:{B8E8B1F1-D4E4-4E80-9D0B-858351F5C83A}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.9.1"
+        "ProductVersion" = "8:1.0.0"
         "Manufacturer" = "8:ML Sistemi"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

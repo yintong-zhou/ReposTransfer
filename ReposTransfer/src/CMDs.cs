@@ -22,13 +22,12 @@ namespace ReposTransfer
             comands = $"usage: rtn [--version] [--help] <commands>{nl}" +
                 $"These are common ReposTranfer used in various situantions:{nl}" +
                 $"{nl}" +
-                $"  {Start()}        {""}{nl}" +
-                $"  {Init()}         {""}{nl}" +
-                $"  {AddOne()}       {""}{nl}" +
-                $"  {AddAll()}       {""}{nl}" +
-                $"  {Push()}         {""}{nl}" +
-                $"  {Status()}       {""}{nl}" +
-                $"  {Pull()}         {""}{nl}" +
+                $"  {Init()} === {"Establish the connection to Local Server/Machine"}{nl}" +
+                $"  {AddOne()} === {"Makes to ready a single file"}{nl}" +
+                $"  {AddAll()} === {"Makes to ready all files and subDirectories"}{nl}" +
+                $"  {Push()} === {"Backup selected files/directories to the Server"}{nl}" +
+                $"  {Status()} === {"Checks the single file with 'status file' otherwise use 'status dir' before transferred"}{nl}" +
+                $"  {Pull()} === {"Restore selected files/directories by the Server"}{nl}" +
                 $"{nl}" +
                 $"'rtn help' list available commands." ;
 

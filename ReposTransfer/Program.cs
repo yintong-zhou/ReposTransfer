@@ -20,13 +20,14 @@ namespace ReposTransfer
         static string newL = Environment.NewLine;
         static string netDir, source, dest, cmd, input;
         static string user, pwd;
+        static string version = "1.0.0";
         #endregion
 
         static void Main(string[] args)
         {
             #region Init Terminal
             Title = "REPOS TRANSFER";
-            WriteLine("Welcome to REPOS TRANSFER v0.9.1" + newL);
+            WriteLine($"Welcome to REPOS TRANSFER v{version}" + newL);
             Write("Source Directory: ");
 
             string sourceDir = ReadLine();
@@ -203,7 +204,10 @@ namespace ReposTransfer
                 #endregion
 
                 #region PULL
-                if (input.StartsWith(_cmds.Pull()))
+                Write(newL + sourceDir + ">");
+                input = ReadLine();
+                command = input.Split(' ');
+                if (command[1] == _cmds.Pull())
                 {
                     try
                     {
